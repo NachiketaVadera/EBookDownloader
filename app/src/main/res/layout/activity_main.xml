@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:weightSum="4">
+
+    <EditText
+        android:id="@+id/etBookName"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="textAutoComplete"
+        android:hint="@string/et_hint_book"
+        android:text=""
+        android:textAlignment="center"
+        android:background="#FDD9E5" />
+
+    <EditText
+        android:id="@+id/etAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="textAutoComplete"
+        android:hint="@string/et_hint_author"
+        android:text=""
+        android:textAlignment="center"
+        android:background="#FBF7D2" />
+
+    <Button
+        android:id="@+id/btnDownload"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/button_text_download"
+        android:onClick="execute"
+        android:background="#CAF2E9" />
+
+    <TextView
+        android:id="@+id/tvDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/text_quote"
+        android:textColor="#FCFFF7"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:background="#283032" />
+
+    <WebView
+        android:id="@+id/wvDownload"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+</LinearLayout>

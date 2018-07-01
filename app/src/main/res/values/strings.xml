@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">eBooks</string>
+    <string name="content_disc">Book Name</string>
+    <string name="et_hint_book">Enter name of the book</string>
+    <string name="et_hint_author">Enter name of the author</string>
+    <string name="button_text_download">Download</string>
+    <string name="text_quote">“Humans, if nothing else, have the good sense to die.” - Markus Zusak</string>
+</resources>
