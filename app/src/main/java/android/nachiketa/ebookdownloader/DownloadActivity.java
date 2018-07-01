@@ -1,13 +1,13 @@
 package android.nachiketa.ebookdownloader;
 
 import android.app.DownloadManager;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,15 +19,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -36,34 +32,21 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
     List<String> links = null;
     ArrayAdapter<String> arrayAdapter;
     public static final String NOT_FOUND_MESSAGE = "Sorry! We were unable to find the book";
+    private static final String TAG = "nachiketa@ebooks";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
 
-        String quote = "Kindly wait";
-        Random random = new Random();
-        int randomNumber = random.nextInt(19);
-        AssetManager assetManager = getAssets();
+        String quote = null;
         try {
-            InputStream inputStream = assetManager.open("quotes.txt");
-            BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder total = new StringBuilder();
-            String line;
-            while ((line = r.readLine()) != null) {
-                total.append(line).append('\n');
-            }
-            String data = total.toString();
-            String[] temp = data.split("~");
-            quote = temp[randomNumber];
-
+            quote = new Global().getRandomQuote();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-        listView = (ListView) findViewById(R.id.expanded_list);
+        listView = findViewById(R.id.expanded_list);
         links = new ArrayList<>();
         linkText = new ArrayList<>();
 
@@ -74,76 +57,127 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(this);
 
-        performSearch(getIntent().getStringExtra("bookName"), getIntent().getStringExtra("author"));
+        performSearch(getIntent().getStringExtra("searchQuery"), getIntent().getStringExtra("searchBy"));
     }
 
-    private void performSearch(final String bookName, final String author) {
-        String baseURL = "https://www.google.com/search?q=";
-        String postFix = " epub vk";
-        String space = " ";
-        final String searchURL = baseURL + bookName + space + author + postFix;
-        Log.i("qwerty", searchURL);
+    private void performSearch(final String query, final String mode) {
+        final String searchQuery;
+        if (mode.equals("book")) {
+            searchQuery = "https://www.google.com/search?q=" + query + "epub+vk";
+            new Thread(new Runnable() {
 
-        new Thread(new Runnable() {
+                StringBuilder linkBuilder = new StringBuilder();
+                StringBuilder linkTextBuilder = new StringBuilder();
 
-            StringBuilder linkBuilder = new StringBuilder();
-            StringBuilder linkTextBuilder = new StringBuilder();
+                @Override
+                public void run() {
+                    try {
+                        Document document = Jsoup.connect(searchQuery).get();
+                        Elements links = document.select("a[href]");
 
-            @Override
-            public void run() {
-                try {
-                    Document document = Jsoup.connect(searchURL).get();
-                    Elements links = document.select("a[href]");
+                        for (Element link : links) {
+                            Log.i(TAG, "run: linkText: " + link.text());
+                            Log.i(TAG, "run: linkURL: " + link.attr("href"));
 
-                    for (Element link : links) {
-                        Log.i("(linkText)", link.text());
-                        Log.i("(linkURL)", link.attr("href"));
+                            String key = link.attr("href");
+                            if (key.startsWith("https://vk.com/wall")) {
+                                Document wallDoc = Jsoup.connect(link.attr("href")).get();
+                                Elements wallLinks = wallDoc.select("a[href]");
 
-                        String key = link.attr("href");
-                        if (key.startsWith("https://vk.com/wall")) {
-                            Document wallDoc = Jsoup.connect(link.attr("href")).get();
-                            Elements wallLinks = wallDoc.select("a[href]");
-
-                            for (Element wallLink : wallLinks) {
-                                Log.i("(wallt)", link.text());
-                                Log.i("(wallu)", link.attr("href"));
-                                if (wallLink.text().toLowerCase().contains(".epub") || wallLink.text().toLowerCase().contains(".pdf") || wallLink.text().toLowerCase().contains(".mobi") || wallLink.text().toLowerCase().contains(".azw3") && wallLink.text().toLowerCase().contains(bookName)) {
-                                    linkBuilder.append("https://vk.com").append(wallLink.attr("href")).append("\n");
-                                    linkTextBuilder.append(wallLink.text()).append("\n");
+                                for (Element wallLink : wallLinks) {
+                                    Log.i(TAG, "run: pageText: " + wallLink.text());
+                                    Log.i(TAG, "run: pageLinks: " + wallLink.attr("href"));
+                                    if (wallLink.text().toLowerCase().contains(".epub") || wallLink.text().toLowerCase().contains(".pdf") || wallLink.text().toLowerCase().contains(".mobi") || wallLink.text().toLowerCase().contains(".azw3") && wallLink.text().toLowerCase().contains(searchQuery)) {
+                                        linkBuilder.append("https://vk.com").append(wallLink.attr("href")).append("\n");
+                                        linkTextBuilder.append(wallLink.text()).append("\n");
+                                    }
                                 }
                             }
                         }
+
+                    } catch (IOException e) {
+                        Log.e("qwerty", e.getMessage());
                     }
 
-                } catch (IOException e) {
-                    Log.e("qwerty", e.getMessage());
-                }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            linkText.clear();
+                            links.clear();
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String temp;
-                        temp = linkBuilder.toString();
-                        Log.i("listlnk", temp);
-                        String[] downloadURLs = temp.split("\n");
-                        links.addAll(Arrays.asList(downloadURLs));
+                            String temp;
+                            temp = linkBuilder.toString();
+                            Log.i(TAG, "run: temp (links) = " + temp);
+                            String[] downloadURLs = temp.split("\n");
+                            links.addAll(Arrays.asList(downloadURLs));
 
-                        temp = linkTextBuilder.toString();
-                        Log.i("listtxt", temp);
-                        String[] displayTexts = temp.split("\n");
-                        linkText.addAll(Arrays.asList(displayTexts));
-                        linkText.remove(0);
+                            temp = linkTextBuilder.toString();
+                            Log.i(TAG, "run: temp (text) = " + temp);
+                            String[] displayTexts = temp.split("\n");
+                            linkText.addAll(Arrays.asList(displayTexts));
 
-                        arrayAdapter.notifyDataSetChanged();
-                        if (linkText.get(0).equals("")) {
-                            linkText.add(NOT_FOUND_MESSAGE);
-                            linkText.remove(0);
+                            if (linkText.get(0).toLowerCase().contains("searching...")) {
+                                linkText.remove(0);
+                            }
+
+                            arrayAdapter.notifyDataSetChanged();
+                            if (linkText.get(0).equals("")) {
+                                linkText.add(NOT_FOUND_MESSAGE);
+                                linkText.remove(0);
+                            }
+
                         }
+                    });
+                }
+            }).start();
+        } else {
+            searchQuery = "https://www.google.co.in/search?q=books+by+" + query;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
 
+                    final StringBuilder bookListBuilder = new StringBuilder();
+
+                    Document document = null;
+                    try {
+                        document = Jsoup.connect(searchQuery).get();
+                        Elements elements = Objects.requireNonNull(document).select("a[class]");
+
+                        for (Element element : elements) {
+                            if (element.attr("class").toLowerCase().equals("klitem")) {
+                                bookListBuilder.append(element.attr("title")).append("\n");
+                            }
+                            Log.i(TAG, "run: Book Titles : \n" + bookListBuilder.toString());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
-            }
-        }).start();
+
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final String[] temp = bookListBuilder.toString().split("\n");
+                            linkText.addAll(Arrays.asList(temp));
+                            linkText.remove(0);
+                            arrayAdapter.notifyDataSetChanged();
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Log.i(TAG, "onItemClick: ITEM TO SEARCH : \n" + linkText.get(position));
+                                    performSearch(linkText.get(position), "book");
+                                    Toast toast = Toast.makeText(DownloadActivity.this, "Searching...", Toast.LENGTH_LONG);
+                                    toast.setGravity(Gravity.CENTER, 0, 0);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+                }
+            }).start();
+        }
+        Log.i(TAG, "performSearch: searchQuery=" + searchQuery);
     }
 
     @Override
@@ -151,7 +185,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         String downloadURL = links.get(position);
         String file = linkText.get(position);
 
-        view.setBackgroundColor(Color.GREEN);
+        Log.i(TAG, "onItemClick: downloadURL : \n" + downloadURL);
+        Log.i(TAG, "onItemClick: file : \n" + file);
 
         if (file.equals(NOT_FOUND_MESSAGE)) {
             Toast.makeText(this, "Try searching for another book!", Toast.LENGTH_SHORT).show();
@@ -164,8 +199,15 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,file);
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             Objects.requireNonNull(downloadManager).enqueue(request);
+
+            view.setBackgroundColor(Color.GREEN);
             Toast.makeText(DownloadActivity.this, "Downloading...", Toast.LENGTH_SHORT).show();
         }
     }
 }
-
+// TODO : Add libgen as a new source
+// TODO : Search only by book or author name
+// TODO : Post on reddit
+// TODO : Add tags
+// TODO : Optimize code
+// TODO : Improve Log tags
