@@ -12,7 +12,7 @@ If you like the application or have some suggestion, you can send me an email at
 
 ## How to Use
 
-* Visit (this)[https://github.com/NachiketaVadera/EBookDownloader] webpage.
+* Visit [this](https://github.com/NachiketaVadera/EBookDownloader) webpage.
 * Click on eBooks.apk in the downloads section.
 * To install the application, you'll need to enable 'Install from unknown sources' in the Security section in the device settings   (Settings>Security>Unknown Sources>Allow).
 * Give the app permission to access storage of your device (Click allow/yes when the app prompts for permission).
