@@ -26,7 +26,7 @@ If you like the application or have some suggestion, you can send me an email at
 
 ## Next Step
 
-Once staretd, an app can never be completely finished. 
+Once stareted, an app can never be completely finished. 
 
 1. Add new sources.
 2. Optimize code.
