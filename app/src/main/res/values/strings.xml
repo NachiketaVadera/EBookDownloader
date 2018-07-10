@@ -5,4 +5,8 @@
     <string name="et_hint_author">Enter name of the author</string>
     <string name="button_text_download">Download</string>
     <string name="text_quote">“Humans, if nothing else, have the good sense to die.” - Markus Zusak</string>
+    <string name="button_text_search">Search</string>
+    <string name="et_hint_query">Enter search query</string>
+    <string name="radio_text_bookName">Search by Book</string>
+    <string name="radio_text_author">Search by Author</string>
 </resources>

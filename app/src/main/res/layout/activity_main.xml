@@ -8,33 +8,49 @@
     android:weightSum="4">
 
     <EditText
-        android:id="@+id/etBookName"
+        android:id="@+id/etQuery"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:inputType="textAutoComplete"
-        android:hint="@string/et_hint_book"
+        android:hint="@string/et_hint_query"
         android:text=""
         android:textAlignment="center"
         android:background="#FDD9E5" />
 
-    <EditText
-        android:id="@+id/etAuthor"
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:inputType="textAutoComplete"
-        android:hint="@string/et_hint_author"
-        android:text=""
-        android:textAlignment="center"
-        android:background="#FBF7D2" />
+        android:background="#FBF7D2"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/radBookName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/radio_text_bookName"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/radio_text_author"
+            android:textSize="20sp" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/btnDownload"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/button_text_download"
+        android:text="@string/button_text_search"
         android:onClick="execute"
         android:background="#CAF2E9" />
 
@@ -43,15 +59,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/text_quote"
+        android:text=""
         android:textColor="#FCFFF7"
         android:textSize="20sp"
         android:textAlignment="center"
         android:background="#283032" />
-
-    <WebView
-        android:id="@+id/wvDownload"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
 
 </LinearLayout>
