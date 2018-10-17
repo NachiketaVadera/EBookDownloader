@@ -27,6 +27,7 @@ import java.util.Objects;
 
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    Global readWrite = null;
     ListView listView = null;
     List<String> linkText = null;
     List<String> links = null;
@@ -38,6 +39,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
+
+        readWrite = new Global();
 
         String quote = null;
         try {
@@ -200,11 +203,19 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             Objects.requireNonNull(downloadManager).enqueue(request);
 
+            if (readWrite.saveToExternalDir("eBooks", "history.txt", file + "\n")) {
+                Log.i(TAG, "onItemClick: History saved successfully");
+            } else {
+                Log.e(TAG, "onItemClick: Error while saving history");
+                Toast.makeText(this, "Could not save history", Toast.LENGTH_SHORT).show();
+            }
+
             view.setBackgroundColor(Color.GREEN);
-            Toast.makeText(DownloadActivity.this, "Downloading...", Toast.LENGTH_SHORT).show();
+
         }
     }
 }
+
 // TODO : Add libgen as a new source
 // TODO : Search only by book or author name
 // TODO : Post on reddit

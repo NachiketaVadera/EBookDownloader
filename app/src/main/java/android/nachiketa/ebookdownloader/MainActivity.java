@@ -6,11 +6,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.io.IOException;
 
@@ -20,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new Global().saveToExternalDir("eBooks", "history.txt", "");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -56,8 +62,30 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Woah! You gotta give me something to work with", Toast.LENGTH_LONG).show();
             etQuery.setFocusable(true);
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add("History");
+        menu.add("Recommendations");
+        menu.add("Exit");
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getTitle().toString()) {
+            case "History":
+                startActivity(new Intent(getApplicationContext(), History.class));
+                break;
+            case "Recommendations":
+                FancyToast.makeText(this, "Coming Soon!", FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show();
+                break;
+            case "Exit":
+                System.exit(0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
