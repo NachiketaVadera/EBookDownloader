@@ -12,11 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:inputType="textAutoComplete"
+        android:background="#FDD9E5"
         android:hint="@string/et_hint_query"
         android:text=""
         android:textAlignment="center"
-        android:background="#FDD9E5" />
+        android:importantForAutofill="no"
+        android:inputType="textCapWords"
+        tools:targetApi="o" />
 
     <RadioGroup
         android:layout_width="match_parent"

@@ -26,7 +26,8 @@
         <activity
             android:name=".DownloadActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-        <activity android:name=".History"></activity>
+        <activity android:name=".History" />
+        <activity android:name=".YourBooks"></activity>
     </application>
 
 </manifest>
