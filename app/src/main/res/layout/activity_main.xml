@@ -3,22 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:weightSum="4">
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/etQuery"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#FDD9E5"
         android:hint="@string/et_hint_query"
-        android:text=""
         android:textAlignment="center"
-        android:importantForAutofill="no"
         android:inputType="textCapWords"
-        tools:targetApi="o" />
+        app:met_baseColor="#0042FF"
+        app:met_errorColor="#FF0000"
+        app:met_floatingLabel="highlight"
+        app:met_minCharacters="5"
+        app:met_primaryColor="#982360"/>
 
     <RadioGroup
         android:layout_width="match_parent"
