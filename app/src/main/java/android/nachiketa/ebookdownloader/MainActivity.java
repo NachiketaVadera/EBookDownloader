@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.vadera.nachiketa.pen_paper.AndroidReadWrite;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +16,8 @@ import android.widget.Toast;
 
 import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            new AndroidReadWrite().saveToExternalDir("eBooks", "history.txt", "");
+            new Global().saveToExternalDir("eBooks", "history.txt", "");
         }
     }
 
@@ -34,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         TextView textView = findViewById(R.id.tvDisplay);
-        textView.setText(new Global().getRandomQuote());
+        try {
+            textView.setText(new Global().getRandomQuote());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void execute(View view) {

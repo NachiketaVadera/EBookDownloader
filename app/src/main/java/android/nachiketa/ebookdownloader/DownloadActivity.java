@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.vadera.nachiketa.pen_paper.AndroidReadWrite;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +27,7 @@ import java.util.Objects;
 
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    AndroidReadWrite readWrite = null;
+    Global readWrite = null;
     ListView listView = null;
     List<String> linkText = null;
     List<String> links = null;
@@ -41,9 +40,14 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
 
-        readWrite = new AndroidReadWrite();
+        readWrite = new Global();
 
-        String quote = new Global().getRandomQuote();
+        String quote = null;
+        try {
+            quote = new Global().getRandomQuote();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         listView = findViewById(R.id.expanded_list);
         links = new ArrayList<>();
