@@ -22,7 +22,7 @@ class Global {
     String getRandomQuote() throws IOException {
         Random random = new Random();
         StringBuilder builder = new StringBuilder();
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("res/raw/quotes.txt");
+        InputStream inputStream = Objects.requireNonNull(this.getClass().getClassLoader()).getResourceAsStream("res/raw/quotes.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
         while ((line = bufferedReader.readLine()) != null) {
@@ -33,7 +33,7 @@ class Global {
         return temp[randomNumber];
     }
 
-    public boolean saveToExternalDir(String directoryName,String fileName, String data) {
+    boolean saveToExternalDir(String directoryName, String fileName, String data) {
         String root = Environment.getExternalStorageDirectory().toString();
         File directory = new File(root + "/" + directoryName);
         if (!directory.exists()) {
@@ -62,7 +62,7 @@ class Global {
         }
     }
 
-    public String loadFromExternalDir(String directoryName, String fileName) {
+    String loadFromExternalDir(String directoryName, String fileName) {
         String root = Environment.getExternalStorageDirectory().toString();
         File directory = new File(root + "/" + directoryName);
         File file = new File(directory, fileName);

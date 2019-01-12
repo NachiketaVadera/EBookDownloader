@@ -217,8 +217,6 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
 }
 
 // TODO : Add libgen as a new source
-// TODO : Search only by book or author name
-// TODO : Post on reddit
 // TODO : Add tags
 // TODO : Optimize code
 // TODO : Improve Log tags

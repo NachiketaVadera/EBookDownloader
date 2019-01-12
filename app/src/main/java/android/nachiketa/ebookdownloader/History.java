@@ -12,6 +12,8 @@ public class History extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         TextView textView = (TextView) findViewById(R.id.tvHistory);
-        textView.setText(new Global().loadFromExternalDir("eBooks", "history.txt"));
+        String oldText = textView.getText().toString();
+        String text = oldText + new Global().loadFromExternalDir("eBooks", "history.txt");
+        textView.setText(text);
     }
 }
