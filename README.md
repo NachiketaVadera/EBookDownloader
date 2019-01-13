@@ -37,7 +37,7 @@ Once stareted, an app can never be completely finished.
 ### For Users
 
 Latest apk:
-[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.4/eBooks_v0.4.apk)
+[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.4/eBooks_v0.4_signed.apk)
 
 ### For Fellow Programmers
 
