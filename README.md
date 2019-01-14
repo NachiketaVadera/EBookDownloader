@@ -4,7 +4,7 @@
 
 eBooks is an app that searches the interent for the book you request and gives you options to download the book in multiple formats(pdf, epub, mobi etc).
 
-As of July 1st of 2018, Flashlight is licensed under MIT License.
+As of July 1st of 2018, eBooks is licensed under MIT License.
 
 ## Feedback
 
@@ -37,15 +37,19 @@ Once stareted, an app can never be completely finished.
 ### For Users
 
 Latest apk:
-[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.3/eBooks-v0.3.apk)
+[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.4/eBooks_v0.4_app-release.apk)
 
 ### For Fellow Programmers
 
 Source Code (zip):
-[eBooks.zip](https://github.com/NachiketaVadera/EBookDownloader/archive/v0.3.zip)
+[eBooks.zip](https://github.com/NachiketaVadera/EBookDownloader/archive/v0.4.zip)
 
 Source Code (tar.gz):
-[eBooks.tar.gz](https://github.com/NachiketaVadera/EBookDownloader/archive/v0.3.tar.gz)
+[eBooks.tar.gz](https://github.com/NachiketaVadera/EBookDownloader/archive/v0.4.tar.gz)
+
+## Contributers
+
+[IzzySoft](https://github.com/IzzySoft)
 
 ## Contributing
 
