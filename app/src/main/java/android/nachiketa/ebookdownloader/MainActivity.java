@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.vadera.nachiketa.pen_paper.AndroidReadWrite;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            new Global().saveToExternalDir("eBooks", "history.txt", "");
+            new AndroidReadWrite().saveToExternalDir("eBooks", "history.txt", "");
         }
     }
 
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     public void execute(View view) {
         EditText etQuery = findViewById(R.id.etQuery);
         RadioButton radBook = findViewById(R.id.radBookName);
-        RadioButton radAuthor = findViewById(R.id.radAuthor);
 
         if (!etQuery.getText().toString().equals("")) {
             String choice;
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 FancyToast.makeText(this, "Coming Soon!", FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show();
                 break;
             case "Exit":
+                FancyToast.makeText(this, "Good Bye!", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                 System.exit(0);
                 break;
         }

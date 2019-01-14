@@ -28,7 +28,9 @@
         <activity
             android:name=".DownloadActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-        <activity android:name=".History" />
+        <activity
+            android:name=".History"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
     </application>
 
 </manifest>
