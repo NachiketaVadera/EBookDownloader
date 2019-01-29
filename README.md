@@ -2,19 +2,21 @@
 
 ## Summary
 
-eBooks is an app that searches the interent for the book you request and gives you options to download the book in multiple formats(pdf, epub, mobi etc).
+eBooks is an app that searches the interent for the book you request and gives you options to download the book in multiple formats (pdf, epub, mobi etc).
 
-As of July 1st of 2018, eBooks is licensed under MIT License.
+## Details
 
-## Feedback
+eBooks dose not search books from a formal database. Instead, your quires are fired though google and the results are parsed for links to trusted sources that can provide download links. Currently, the only source in use is vk.com with more to follow. From the search results page, the app selects a page that has mentioned your query on the pages text. The selected page is parsed again and all the file download links are collected and sent back for you to see and download. 
 
-If you like the application or have some suggestion, you can send me an email at nachiketavadera@outlook.com
+Another feature that the app provides is ‘Search by Author’ which parses a card view google search page with books by all the authors. While easy, this method is quite inefficient and will be replaced down the line with JSON parsing of Google Books API.
+
+Libraries used: 
+* [Jsoup](https://jsoup.org/)
+* [PenAndPaper](https://github.com/NachiketaVadera/PenAndPaper) {My own under development library)
 
 ## How to Use
 
-* Visit [this](https://github.com/NachiketaVadera/EBookDownloader) webpage.
-* Click on eBooks.apk in the downloads section.
-* To install the application, you'll need to enable 'Install from unknown sources' in the Security section in the device settings   (Settings>Security>Unknown Sources>Allow).
+* You can download the app directly from the F-Droid app.
 * Give the app permission to access storage of your device (Click allow/yes when the app prompts for permission).
 * Enter the name of the book you want to download and the author. Try to spell the names accurately for better results.
 * Click on 'Search' and you'll be given options to download from.
