@@ -9,4 +9,9 @@
     <string name="et_hint_query">Enter search query</string>
     <string name="radio_text_bookName">Search by Book</string>
     <string name="radio_text_author">Search by Author</string>
+    <string name="menu_title_srchHist">Search History</string>
+    <string name="menu_title_dnldHist">Download History</string>
+    <string name="menu_title_clrDnldHist">Clear Download History</string>
+    <string name="menu_title_clrSrchHist">Clear Search History</string>
+    <string name="menu_title_clrHist">Clear All History</string>
 </resources>

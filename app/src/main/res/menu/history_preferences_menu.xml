@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/omiSrhHist"
+        android:checkable="true"
+        android:checked="true"
+        android:menuCategory="alternative"
+        android:title="@string/menu_title_srchHist" />
+
+    <item
+        android:id="@+id/omiDnldHist"
+        android:checkable="true"
+        android:checked="true"
+        android:menuCategory="alternative"
+        android:title="@string/menu_title_dnldHist" />
+
+    <item
+        android:id="@+id/omiClrSrhHist"
+        android:menuCategory="alternative"
+        android:title="@string/menu_title_clrSrchHist" />
+
+    <item
+        android:id="@+id/omiClrDnldHist"
+        android:menuCategory="alternative"
+        android:title="@string/menu_title_clrDnldHist" />
+
+    <item
+        android:id="@+id/omiClrHist"
+        android:menuCategory="alternative"
+        android:title="@string/menu_title_clrHist" />
+
+</menu>

@@ -88,7 +88,3 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-// TODO : Change UI
-// TODO : Add menu
-// TODO : Optimize Libgen Parsing
