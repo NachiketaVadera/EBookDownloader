@@ -15,6 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.snappydb.DB;
+import com.snappydb.DBFactory;
+import com.snappydb.SnappydbException;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -54,7 +58,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         links = new ArrayList<>();
         linkText = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, linkText);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, linkText);
 
         linkText.add("Searching... Read this amazing quote:\n" + quote);
 
@@ -189,6 +193,14 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         String downloadURL = links.get(position);
         String file = linkText.get(position);
 
+        DB historyDB = null;
+        try {
+            historyDB = DBFactory.open(getApplicationContext(), "history");
+        } catch (SnappydbException e) {
+            Log.e(TAG, "ERROR while creating history database");
+            e.printStackTrace();
+        }
+
         Log.i(TAG, "onItemClick: downloadURL : \n" + downloadURL);
         Log.i(TAG, "onItemClick: file : \n" + file);
 
@@ -204,20 +216,16 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             Objects.requireNonNull(downloadManager).enqueue(request);
 
-            if (readWrite.saveToExternalDir("eBooks", "history.txt", file + "\n")) {
-                Log.i(TAG, "onItemClick: History saved successfully");
-            } else {
-                Log.e(TAG, "onItemClick: Error while saving history");
-                Toast.makeText(this, "Could not save history", Toast.LENGTH_SHORT).show();
+            // save to database
+            try {
+                Objects.requireNonNull(historyDB).put("^_^book" + file, file);
+            } catch (SnappydbException e) {
+                e.printStackTrace();
             }
+
 
             view.setBackgroundColor(Color.GREEN);
 
         }
     }
 }
-
-// TODO : Add libgen as a new source
-// TODO : Add tags
-// TODO : Optimize code
-// TODO : Improve Log tags

@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            new AndroidReadWrite().saveToExternalDir("eBooks", "history.txt", "");
         }
     }
 
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("searchBy", choice);
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Woah! You gotta give me something to work with", Toast.LENGTH_LONG).show();
+            FancyToast.makeText(this, "Woah! You gotta give me something to work with", Toast.LENGTH_LONG, FancyToast.ERROR, false).show();
             etQuery.setFocusable(true);
         }
     }
@@ -88,7 +87,3 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-// TODO : Change UI
-// TODO : Add menu
-// TODO : Optimize Libgen Parsing

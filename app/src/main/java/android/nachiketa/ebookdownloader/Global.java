@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Random;
 
 class Global {
+
     String getRandomQuote() throws IOException {
         Random random = new Random();
         StringBuilder builder = new StringBuilder();
