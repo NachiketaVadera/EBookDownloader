@@ -17,10 +17,10 @@ import java.util.List;
 
 public class History extends AppCompatActivity {
 
-    private ListView listHistory = null;
     List<String> history = null;
     DB historyDB = null;
     ArrayAdapter<String> arrayAdapter;
+    public static final String WAIT_MESSAGE = "Kindly wait for a second!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +33,32 @@ public class History extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        listHistory = findViewById(R.id.list_history);
+        ListView listHistory = findViewById(R.id.list_history);
         history = new ArrayList<>();
 
+        history.add(WAIT_MESSAGE);
+
         fillHistoryList();
-        populate();
+
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, history);
+        listHistory.setAdapter(arrayAdapter);
+
+        if (history.get(0).equals(WAIT_MESSAGE)) {
+            showNoHistory();
+        }
     }
 
     private void fillHistoryList() {
         String[] values = null;
         try {
-            values = historyDB.findKeys("^_^book");
+            values = historyDB.findKeys("eBooks_");
         } catch (SnappydbException e) {
             e.printStackTrace();
         }
         history.addAll(Arrays.asList(values));
     }
 
-    private void populate() {
+    private void showNoHistory() {
 
     }
 }

@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
@@ -205,7 +206,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         Log.i(TAG, "onItemClick: file : \n" + file);
 
         if (file.equals(NOT_FOUND_MESSAGE)) {
-            Toast.makeText(this, "Try searching for another book!", Toast.LENGTH_SHORT).show();
+            FancyToast.makeText(this, "Try searching for another book!", Toast.LENGTH_SHORT, FancyToast.INFO, false).show();
         }
         else {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadURL));
@@ -218,7 +219,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
 
             // save to database
             try {
-                Objects.requireNonNull(historyDB).put("^_^book" + file, file);
+                Objects.requireNonNull(historyDB).put("eBooks_" + file, file);
             } catch (SnappydbException e) {
                 e.printStackTrace();
             }
