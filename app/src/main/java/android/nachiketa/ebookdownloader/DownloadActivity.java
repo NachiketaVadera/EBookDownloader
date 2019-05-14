@@ -33,13 +33,15 @@ import java.util.Objects;
 
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    // <a href="link.com">Link</a>
+
     AndroidReadWrite readWrite = null;
     ListView listView = null;
     List<String> linkText = null;
     List<String> links = null;
     ArrayAdapter<String> arrayAdapter;
     public static final String NOT_FOUND_MESSAGE = "Sorry! We were unable to find the book";
-    private static final String TAG = "nachiketa@ebooks";
+    private static final String TAG = "javalab@ebooks";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,7 +208,10 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         Log.i(TAG, "onItemClick: file : \n" + file);
 
         if (file.equals(NOT_FOUND_MESSAGE)) {
-            FancyToast.makeText(this, "Try searching for another book!", Toast.LENGTH_SHORT, FancyToast.INFO, false).show();
+            FancyToast.makeText(this, "Try searching for another book!", Toast.LENGTH_LONG, FancyToast.INFO, false).show();
+        }
+        else if (file.contains("Searching...")) {
+            FancyToast.makeText(this, "You found the hidden button! Rejoice!", FancyToast.LENGTH_LONG, FancyToast.CONFUSING, false);
         }
         else {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadURL));
@@ -219,7 +224,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
 
             // save to database
             try {
-                Objects.requireNonNull(historyDB).put("eBooks_" + file, file);
+                Objects.requireNonNull(historyDB).put(" " + file + " ", file);
             } catch (SnappydbException e) {
                 e.printStackTrace();
             }

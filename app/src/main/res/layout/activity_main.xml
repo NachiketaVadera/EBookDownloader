@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:inputType="textAutoComplete"
+        android:inputType="text"
         android:hint="@string/et_hint_query"
         android:text=""
         android:textAlignment="center"
@@ -53,6 +53,8 @@
         android:layout_weight="1"
         android:text="@string/button_text_search"
         android:onClick="execute"
+        android:textSize="20sp"
+        android:fontFamily="monospace"
         android:background="#CAF2E9" />
 
     <TextView
