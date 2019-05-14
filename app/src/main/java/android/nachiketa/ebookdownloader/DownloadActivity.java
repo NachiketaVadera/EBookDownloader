@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -75,7 +76,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         final String searchQuery;
         if (mode.equals("book")) {
             searchQuery = "https://www.google.com/search?q=" + query + "epub+vk";
-            new Thread(new Runnable() {
+            Thread sourceVK = new Thread(new Runnable() {
 
                 StringBuilder linkBuilder = new StringBuilder();
                 StringBuilder linkTextBuilder = new StringBuilder();
@@ -140,7 +141,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                         }
                     });
                 }
-            }).start();
+            });
+            sourceVK.start();
         } else {
             searchQuery = "https://www.google.co.in/search?q=books+by+" + query;
             new Thread(new Runnable() {
@@ -229,8 +231,9 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                 e.printStackTrace();
             }
 
+            Random random = new Random();
 
-            view.setBackgroundColor(Color.GREEN);
+            view.setBackgroundColor(Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
 
         }
     }
