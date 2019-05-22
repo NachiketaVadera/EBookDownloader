@@ -1,8 +1,14 @@
 # eBooks
 
+[![GitHub license](https://img.shields.io/github/license/NachiketaVadera/EBookDownloader.svg?style=for-the-badge)](https://github.com/NachiketaVadera/EBookDownloader/blob/master/LICENSE) 
+[![GitHub stars](https://img.shields.io/github/stars/NachiketaVadera/Ebookdownloader.svg?style=for-the-badge)](https://github.com/NachiketaVadera/Ebookdownloader/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/NachiketaVadera/Ebookdownloader.svg?color=brightgreen&style=for-the-badge)](https://github.com/NachiketaVadera/Ebookdownloader/issues)
+
 ## Summary
 
 eBooks is an app that searches the interent for the book you request and gives you options to download the book in multiple formats (pdf, epub, mobi etc).
+
+<a href="https://f-droid.org/packages/android.nachiketa.ebookdownloader/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75"></a>
 
 ## Details
 
