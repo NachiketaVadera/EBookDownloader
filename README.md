@@ -12,7 +12,7 @@ eBooks is an app that searches the interent for the book you request and gives y
 
 ## Details
 
-eBooks dose not search books from a formal database. Instead, your quires are fired though google and the results are parsed for links to trusted sources that can provide download links. Currently, the only source in use is vk.com with more to follow. From the search results page, the app selects a page that has mentioned your query on the pages text. The selected page is parsed again and all the file download links are collected and sent back for you to see and download. 
+eBooks dose not search books from a formal database. Instead, your queries are fired through Google and the results are parsed for links to trusted sources that can provide download links. Currently, the only source in use is vk.com with more to follow. From the search results page, the app selects a page that has mentioned your query on the pages text. The selected page is parsed again and all the file download links are collected and sent back for you to see and download. 
 
 Another feature that the app provides is ‘Search by Author’ which parses a card view google search page with books by all the authors. While easy, this method is quite inefficient and will be replaced down the line with JSON parsing of Google Books API.
 
@@ -25,16 +25,16 @@ Libraries used:
 * You can download the app directly from the F-Droid app.
 * Give the app permission to access storage of your device (Click allow/yes when the app prompts for permission).
 * Enter the name of the book you want to download and the author. Try to spell the names accurately for better results.
-* Click on 'Search' and you'll be given options to download from.
+* Click on `Search` and you'll be given options to download from.
 * While you wait, read some of the quotes I like.
-* To download a book, click on the name you want to download. Your selection will trun green and download will start.
-* You can find the book in your Downloads folder.
+* To download a book, click on the name you want to download. Your selection will turn green and download will start.
+* You can find the book in your `Downloads` folder.
 * Make sure you have appropriate application to read the file you just downloaded.
 * Have fun reading!
 
 ## Next Step
 
-Once stareted, an app can never be completely finished. 
+Once started, an app can never be completely finished. 
 
 1. Add new sources.
 2. Optimize code.
@@ -61,7 +61,7 @@ Source Code (tar.gz):
 
 ## Contributing
 
-Any help, including feedback, is highly appriciated. I have just started out with Android and I’m relatively new to app development.
+Any help, including feedback, is highly appreciated. I have just started out with Android and I’m relatively new to app development.
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b new-branch`
