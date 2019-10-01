@@ -44,17 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void execute(View view) {
         EditText etQuery = findViewById(R.id.etQuery);
-        RadioButton radBook = findViewById(R.id.radBookName);
+        RadioButton radVK = findViewById(R.id.radSrcVK);
 
         if (!etQuery.getText().toString().equals("")) {
             String choice;
-            if (radBook.isChecked())
-                choice = "book";
+            if (radVK.isChecked())
+                choice = "vk";
             else
-                choice = "author";
+                choice = "libgen";
             Intent intent = new Intent(this, DownloadActivity.class);
-            intent.putExtra("searchQuery", etQuery.getText().toString());
-            intent.putExtra("searchBy", choice);
+            intent.putExtra("query", etQuery.getText().toString());
+            intent.putExtra("choice", choice);
             startActivity(intent);
         } else {
             FancyToast.makeText(this, "Don't shoot blanks!", Toast.LENGTH_LONG, FancyToast.ERROR, false).show();

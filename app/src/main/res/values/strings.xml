@@ -9,4 +9,6 @@
     <string name="et_hint_query">Enter search query</string>
     <string name="radio_text_bookName">Search by Book</string>
     <string name="radio_text_author">Search by Author</string>
+    <string name="radio_text_vk">VK</string>
+    <string name="radio_text_libgen">Libgen</string>
 </resources>

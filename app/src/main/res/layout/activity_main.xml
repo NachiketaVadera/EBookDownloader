@@ -28,20 +28,20 @@
         android:weightSum="2">
 
         <RadioButton
-            android:id="@+id/radBookName"
+            android:id="@+id/radSrcVK"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:checked="true"
-            android:text="@string/radio_text_bookName"
+            android:text="@string/radio_text_vk"
             android:textSize="20sp" />
 
         <RadioButton
-            android:id="@+id/radAuthor"
+            android:id="@+id/radSrcLibgen"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/radio_text_author"
+            android:text="@string/radio_text_libgen"
             android:textSize="20sp" />
 
     </RadioGroup>
