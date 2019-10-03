@@ -140,14 +140,14 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                         e.printStackTrace();
                     }
                     Elements resultPageLinks = null;
-                    Elements resultPageTDs = null;
+                    Elements resultPageAnchors = null;
                     if (resultPage != null) {
                         resultPageLinks = resultPage.select("a[href]");
-                        resultPageTDs = resultPage.select("td[title]");
+                        resultPageAnchors = resultPage.select("a[title]");
                     } else {
                         Log.i(TAG, "libgen result page is null");
                     }
-                    if (resultPageLinks != null && resultPageTDs != null) {
+                    if (resultPageLinks != null && resultPageAnchors != null) {
 
                         linkText.clear();
                         links.clear();
@@ -155,14 +155,14 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                         Log.i(TAG, "libgen: links and linkText lists cleared");
 
                         Log.i(TAG, "libgen book titles:\n\n");
-                        for (Element td:
-                             resultPageTDs) {
+                        for (Element a :
+                                resultPageAnchors) {
 
-                            String title = td.attr("title");
+                            String title = a.attr("title");
 
                             if (title.equals("")) {
-                                linkText.add(td.text());
-                                Log.i(TAG, td.text() + "\n");
+                                linkText.add(a.text());
+                                Log.i(TAG, a.text() + "\n");
                             }
                         }
 
@@ -173,7 +173,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                             String link = href.attr("href");
 
                             if (link.contains("ads") || link.contains("md5") && !link.contains("b-ok.cc")
-                                    && !link.contains("libgen.me") && !link.contains("bookfi.net")) {
+                                    && !link.contains("libgen.me") && !link.contains("bookfi.net")
+                                    && !link.contains("book/index.php?")) {
                                 links.add(link);
                                 Log.i(TAG, link + "\n");
                             }
@@ -255,7 +256,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
 
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadURL));
             request.setDescription("eBooks : Happy reading!");
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+            request.setTitle("eBooks: Downloading " + file);
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,file);
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             Objects.requireNonNull(downloadManager).enqueue(request);
