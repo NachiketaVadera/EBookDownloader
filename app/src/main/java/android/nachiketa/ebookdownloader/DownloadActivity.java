@@ -32,11 +32,11 @@ import java.util.Random;
 
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    public static final String NOT_FOUND_MESSAGE = "Sorry! We were unable to find the book";
+    private static final String TAG = "ebkdldr";
     private List<String> linkText = null;
     private List<String> links = null;
     private ArrayAdapter<String> arrayAdapter;
-    public static final String NOT_FOUND_MESSAGE = "Sorry! We were unable to find the book";
-    private static final String TAG = "ebkdldr";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +127,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                 }
             });
             sourceVK.start();
-        } else if (mode.equals("libgen")){
+        } else if (mode.equals("libgen")) {
             searchQuery = "http://gen.lib.rus.ec/search.php?req=" + query;
             Thread sourceLibgen = new Thread(new Runnable() {
                 @Override
@@ -167,8 +167,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                         }
 
                         Log.i(TAG, "libgen download links:\n\n");
-                        for (Element href:
-                             resultPageLinks) {
+                        for (Element href :
+                                resultPageLinks) {
 
                             String link = href.attr("href");
 
@@ -224,8 +224,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
 
         if (file.equals(NOT_FOUND_MESSAGE)) {
             FancyToast.makeText(this, "Try searching for another book!", Toast.LENGTH_LONG, FancyToast.INFO, false).show();
-        }
-        else if (file.contains("Searching...")) {
+        } else if (file.contains("Searching...")) {
             FancyToast.makeText(this, "You found the hidden button! Rejoice!", FancyToast.LENGTH_LONG, FancyToast.CONFUSING, false);
         } else {
             if (Objects.equals(getIntent().getStringExtra("choice"), "libgen")) {
@@ -240,8 +239,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                     links = downloadPage.select("a[href]");
                 }
                 if (links != null) {
-                    for (Element link:
-                         links) {
+                    for (Element link :
+                            links) {
 
                         String href = link.attr("href");
 
@@ -258,7 +257,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
             request.setDescription("eBooks : Happy reading!");
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
             request.setTitle("eBooks: Downloading " + file);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,file);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, file);
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             Objects.requireNonNull(downloadManager).enqueue(request);
             // save to database

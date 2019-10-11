@@ -126,9 +126,9 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final String book = history.get(position).trim();
         final SweetAlertDialog sureDialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
-            sureDialog.setTitleText("Search?")
-                    .setContentText("Do you want to search for this book again?")
-                    .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
+        sureDialog.setTitleText("Search?")
+                .setContentText("Do you want to search for this book again?")
+                .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         sureDialog.dismissWithAnimation();
@@ -141,7 +141,7 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
                         sureDialog.dismissWithAnimation();
                     }
                 });
-            sureDialog.show();
+        sureDialog.show();
     }
 
     // options menu
