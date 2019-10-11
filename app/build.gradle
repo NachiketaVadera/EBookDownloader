@@ -2,33 +2,62 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
+
     defaultConfig {
         applicationId "android.nachiketa.ebookdownloader"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 4
         versionName "0.4"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+	compileOptions {
+        encoding = 'UTF-8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
 }
 
 dependencies {
-    implementation 'org.jsoup:jsoup:1.11.3'
-    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.3'
-    implementation 'com.github.NachiketaVadera:PenAndPaper:v0.1'
-    implementation 'com.snappydb:snappydb-lib:0.4.0'
-    implementation 'com.esotericsoftware.kryo:kryo:2.24.0'
-    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+	
+	//https://github.com/jhy/jsoup/blob/master/CHANGES
+	implementation 'org.jsoup:jsoup:1.11.3'
+
+	//https://github.com/Shashank02051997/FancyToast-Android/releases
+    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
+
+	//https://github.com/NachiketaVadera/PenAndPaper/releases
+    implementation 'com.github.NachiketaVadera:PenAndPaper:v0.1'
+
+	//https://github.com/nhachicha/SnappyDB/blob/master/CHANGELOG.md
+    implementation 'com.snappydb:snappydb-lib:0.4.0'
+
+	//https://github.com/EsotericSoftware/kryo/releases
+	//https://github.com/EsotericSoftware/kryo/commit/0f483d5d05afff36d0a9f65e745f1db80482b297#diff-8b1c3fd0d4a6765c16dfd18509182f9d
+    implementation 'com.esotericsoftware.kryo:kryo:2.24.0'
+
+	//https://mvnrepository.com/artifact/com.github.f0ris.sweetalert/library
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
