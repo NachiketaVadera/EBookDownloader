@@ -71,3 +71,5 @@
 “Books are a uniquely portable magic.” - Stephen King
 ~
 “Have you ever noticed how ‘What the hell’ is always the right decision to make?” - Terry Johnson
+~
+“Humans, if nothing else, have the good sense to die.” - Markus Zusak

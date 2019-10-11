@@ -103,91 +103,82 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                         Log.e(TAG, Objects.requireNonNull(e.getMessage()));
                     }
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            linkText.clear();
-                            links.clear();
+                    runOnUiThread(() -> {
+                        linkText.clear();
+                        links.clear();
 
-                            String temp;
-                            temp = linkBuilder.toString();
-                            Log.i(TAG, "run: temp (links) = " + temp);
-                            String[] downloadURLs = temp.split("\n");
-                            links.addAll(Arrays.asList(downloadURLs));
+                        String temp;
+                        temp = linkBuilder.toString();
+                        Log.i(TAG, "run: temp (links) = " + temp);
+                        String[] downloadURLs = temp.split("\n");
+                        links.addAll(Arrays.asList(downloadURLs));
 
-                            temp = linkTextBuilder.toString();
-                            Log.i(TAG, "run: temp (text) = " + temp);
-                            String[] displayTexts = temp.split("\n");
-                            linkText.addAll(Arrays.asList(displayTexts));
+                        temp = linkTextBuilder.toString();
+                        Log.i(TAG, "run: temp (text) = " + temp);
+                        String[] displayTexts = temp.split("\n");
+                        linkText.addAll(Arrays.asList(displayTexts));
 
-                            Log.i(TAG, "calling setUI() from libgen");
-                            setUI();
-                        }
+                        Log.i(TAG, "calling setUI() from libgen");
+                        setUI();
                     });
                 }
             });
             sourceVK.start();
         } else if (mode.equals("libgen")) {
             searchQuery = "http://gen.lib.rus.ec/search.php?req=" + query;
-            Thread sourceLibgen = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Document resultPage = null;
-                    try {
-                        resultPage = Jsoup.connect(searchQuery).get();
-                    } catch (IOException e) {
-                        Log.i(TAG, "libgen result page not found:\n\n" + e.getMessage());
-                        e.printStackTrace();
-                    }
-                    Elements resultPageLinks = null;
-                    Elements resultPageAnchors = null;
-                    if (resultPage != null) {
-                        resultPageLinks = resultPage.select("a[href]");
-                        resultPageAnchors = resultPage.select("a[title]");
-                    } else {
-                        Log.i(TAG, "libgen result page is null");
-                    }
-                    if (resultPageLinks != null && resultPageAnchors != null) {
-
-                        linkText.clear();
-                        links.clear();
-
-                        Log.i(TAG, "libgen: links and linkText lists cleared");
-
-                        Log.i(TAG, "libgen book titles:\n\n");
-                        for (Element a :
-                                resultPageAnchors) {
-
-                            String title = a.attr("title");
-
-                            if (title.equals("")) {
-                                linkText.add(a.text());
-                                Log.i(TAG, a.text() + "\n");
-                            }
-                        }
-
-                        Log.i(TAG, "libgen download links:\n\n");
-                        for (Element href :
-                                resultPageLinks) {
-
-                            String link = href.attr("href");
-
-                            if (link.contains("ads") || link.contains("md5") && !link.contains("b-ok.cc")
-                                    && !link.contains("libgen.me") && !link.contains("bookfi.net")
-                                    && !link.contains("book/index.php?")) {
-                                links.add(link);
-                                Log.i(TAG, link + "\n");
-                            }
-                        }
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i(TAG, "calling setUI() from libgen");
-                            setUI();
-                        }
-                    });
+            Thread sourceLibgen = new Thread(() -> {
+                Document resultPage = null;
+                try {
+                    resultPage = Jsoup.connect(searchQuery).get();
+                } catch (IOException e) {
+                    Log.i(TAG, "libgen result page not found:\n\n" + e.getMessage());
+                    e.printStackTrace();
                 }
+                Elements resultPageLinks = null;
+                Elements resultPageAnchors = null;
+                if (resultPage != null) {
+                    resultPageLinks = resultPage.select("a[href]");
+                    resultPageAnchors = resultPage.select("a[title]");
+                } else {
+                    Log.i(TAG, "libgen result page is null");
+                }
+                if (resultPageLinks != null && resultPageAnchors != null) {
+
+                    linkText.clear();
+                    links.clear();
+
+                    Log.i(TAG, "libgen: links and linkText lists cleared");
+
+                    Log.i(TAG, "libgen book titles:\n\n");
+                    for (Element a :
+                            resultPageAnchors) {
+
+                        String title = a.attr("title");
+
+                        if (title.equals("")) {
+                            linkText.add(a.text());
+                            Log.i(TAG, a.text() + "\n");
+                        }
+                    }
+
+                    Log.i(TAG, "libgen download links:\n\n");
+                    for (Element href :
+                            resultPageLinks) {
+
+                        String link = href.attr("href");
+
+                        if (link.contains("ads") || link.contains("md5") && !link.contains("b-ok.cc")
+                                && !link.contains("libgen.me") && !link.contains("bookfi.net")
+                                && !link.contains("book/index.php?")) {
+                            links.add(link);
+                            Log.i(TAG, link + "\n");
+                        }
+                    }
+                }
+                runOnUiThread(() -> {
+                    Log.i(TAG, "calling setUI() from libgen");
+                    setUI();
+                });
             });
             sourceLibgen.start();
         }

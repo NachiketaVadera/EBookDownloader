@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">eBooks</string>
-    <string name="content_disc">Book Name</string>
-    <string name="et_hint_book">Enter name of the book</string>
-    <string name="et_hint_author">Enter name of the author</string>
+    <string name="content_disc">Book name</string>
+    <string name="et_hint_book">Enter name of book</string>
+    <string name="et_hint_author">Enter name of author</string>
     <string name="button_text_download">Download</string>
-    <string name="text_quote">“Humans, if nothing else, have the good sense to die.” - Markus Zusak</string>
     <string name="button_text_search">Search</string>
     <string name="et_hint_query">Enter search query</string>
-    <string name="radio_text_bookName">Search by Book</string>
-    <string name="radio_text_author">Search by Author</string>
+    <string name="radio_text_bookName">Search by book</string>
+    <string name="radio_text_author">Search by author</string>
     <string name="radio_text_vk">VK</string>
     <string name="radio_text_libgen">Libgen</string>
 </resources>
