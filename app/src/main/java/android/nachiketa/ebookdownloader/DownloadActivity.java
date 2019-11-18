@@ -5,13 +5,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.shashank.sony.fancytoastlib.FancyToast;
 import com.snappydb.DB;
@@ -32,11 +33,11 @@ import java.util.Random;
 
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    public static final String NOT_FOUND_MESSAGE = "Sorry! We were unable to find the book";
+    private static final String TAG = "ebkdldr";
     private List<String> linkText = null;
     private List<String> links = null;
     private ArrayAdapter<String> arrayAdapter;
-    public static final String NOT_FOUND_MESSAGE = "Sorry! We were unable to find the book";
-    private static final String TAG = "ebkdldr";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,91 +104,82 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                         Log.e(TAG, Objects.requireNonNull(e.getMessage()));
                     }
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            linkText.clear();
-                            links.clear();
+                    runOnUiThread(() -> {
+                        linkText.clear();
+                        links.clear();
 
-                            String temp;
-                            temp = linkBuilder.toString();
-                            Log.i(TAG, "run: temp (links) = " + temp);
-                            String[] downloadURLs = temp.split("\n");
-                            links.addAll(Arrays.asList(downloadURLs));
+                        String temp;
+                        temp = linkBuilder.toString();
+                        Log.i(TAG, "run: temp (links) = " + temp);
+                        String[] downloadURLs = temp.split("\n");
+                        links.addAll(Arrays.asList(downloadURLs));
 
-                            temp = linkTextBuilder.toString();
-                            Log.i(TAG, "run: temp (text) = " + temp);
-                            String[] displayTexts = temp.split("\n");
-                            linkText.addAll(Arrays.asList(displayTexts));
+                        temp = linkTextBuilder.toString();
+                        Log.i(TAG, "run: temp (text) = " + temp);
+                        String[] displayTexts = temp.split("\n");
+                        linkText.addAll(Arrays.asList(displayTexts));
 
-                            Log.i(TAG, "calling setUI() from libgen");
-                            setUI();
-                        }
+                        Log.i(TAG, "calling setUI() from libgen");
+                        setUI();
                     });
                 }
             });
             sourceVK.start();
-        } else if (mode.equals("libgen")){
+        } else if (mode.equals("libgen")) {
             searchQuery = "http://gen.lib.rus.ec/search.php?req=" + query;
-            Thread sourceLibgen = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Document resultPage = null;
-                    try {
-                        resultPage = Jsoup.connect(searchQuery).get();
-                    } catch (IOException e) {
-                        Log.i(TAG, "libgen result page not found:\n\n" + e.getMessage());
-                        e.printStackTrace();
-                    }
-                    Elements resultPageLinks = null;
-                    Elements resultPageAnchors = null;
-                    if (resultPage != null) {
-                        resultPageLinks = resultPage.select("a[href]");
-                        resultPageAnchors = resultPage.select("a[title]");
-                    } else {
-                        Log.i(TAG, "libgen result page is null");
-                    }
-                    if (resultPageLinks != null && resultPageAnchors != null) {
-
-                        linkText.clear();
-                        links.clear();
-
-                        Log.i(TAG, "libgen: links and linkText lists cleared");
-
-                        Log.i(TAG, "libgen book titles:\n\n");
-                        for (Element a :
-                                resultPageAnchors) {
-
-                            String title = a.attr("title");
-
-                            if (title.equals("")) {
-                                linkText.add(a.text());
-                                Log.i(TAG, a.text() + "\n");
-                            }
-                        }
-
-                        Log.i(TAG, "libgen download links:\n\n");
-                        for (Element href:
-                             resultPageLinks) {
-
-                            String link = href.attr("href");
-
-                            if (link.contains("ads") || link.contains("md5") && !link.contains("b-ok.cc")
-                                    && !link.contains("libgen.me") && !link.contains("bookfi.net")
-                                    && !link.contains("book/index.php?")) {
-                                links.add(link);
-                                Log.i(TAG, link + "\n");
-                            }
-                        }
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i(TAG, "calling setUI() from libgen");
-                            setUI();
-                        }
-                    });
+            Thread sourceLibgen = new Thread(() -> {
+                Document resultPage = null;
+                try {
+                    resultPage = Jsoup.connect(searchQuery).get();
+                } catch (IOException e) {
+                    Log.i(TAG, "libgen result page not found:\n\n" + e.getMessage());
+                    e.printStackTrace();
                 }
+                Elements resultPageLinks = null;
+                Elements resultPageAnchors = null;
+                if (resultPage != null) {
+                    resultPageLinks = resultPage.select("a[href]");
+                    resultPageAnchors = resultPage.select("a[title]");
+                } else {
+                    Log.i(TAG, "libgen result page is null");
+                }
+                if (resultPageLinks != null && resultPageAnchors != null) {
+
+                    linkText.clear();
+                    links.clear();
+
+                    Log.i(TAG, "libgen: links and linkText lists cleared");
+
+                    Log.i(TAG, "libgen book titles:\n\n");
+                    for (Element a :
+                            resultPageAnchors) {
+
+                        String title = a.attr("title");
+
+                        if (title.equals("")) {
+                            linkText.add(a.text());
+                            Log.i(TAG, a.text() + "\n");
+                        }
+                    }
+
+                    Log.i(TAG, "libgen download links:\n\n");
+                    for (Element href :
+                            resultPageLinks) {
+
+                        String link = href.attr("href");
+
+                        if (link.contains("ads") || link.contains("md5") && !link.contains("b-ok.cc")
+                                && !link.contains("libgen.me") && !link.contains("bookfi.net")
+                                && !link.contains("book/index.php?")) {
+                            links.add(link);
+                            Log.i(TAG, link + "\n");
+                        }
+                    }
+                }
+                runOnUiThread(() -> {
+                    Log.i(TAG, "calling setUI() from libgen");
+                    setUI();
+                });
             });
             sourceLibgen.start();
         }
@@ -224,8 +216,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
 
         if (file.equals(NOT_FOUND_MESSAGE)) {
             FancyToast.makeText(this, "Try searching for another book!", Toast.LENGTH_LONG, FancyToast.INFO, false).show();
-        }
-        else if (file.contains("Searching...")) {
+        } else if (file.contains("Searching...")) {
             FancyToast.makeText(this, "You found the hidden button! Rejoice!", FancyToast.LENGTH_LONG, FancyToast.CONFUSING, false);
         } else {
             if (Objects.equals(getIntent().getStringExtra("choice"), "libgen")) {
@@ -240,8 +231,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                     links = downloadPage.select("a[href]");
                 }
                 if (links != null) {
-                    for (Element link:
-                         links) {
+                    for (Element link :
+                            links) {
 
                         String href = link.attr("href");
 
@@ -258,7 +249,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
             request.setDescription("eBooks : Happy reading!");
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
             request.setTitle("eBooks: Downloading " + file);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,file);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, file);
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             Objects.requireNonNull(downloadManager).enqueue(request);
             // save to database

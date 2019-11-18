@@ -2,13 +2,14 @@ package android.nachiketa.ebookdownloader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
@@ -66,12 +67,9 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
         SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
         dialog.setTitleText("You have no history,\nJon Snow!");
         dialog.setConfirmText("Go Back");
-        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
-            }
+        dialog.setConfirmClickListener(sweetAlertDialog -> {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
         });
         dialog.show();
     }
@@ -82,41 +80,25 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
 
         final SweetAlertDialog confirmDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
         confirmDialog.setTitleText("Are you sure you want to delete?");
-        confirmDialog.setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                try {
-                    historyDB.del(text);
-                    confirmDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    confirmDialog.setTitleText("Deleted!");
-                    confirmDialog.setContentText("The history you deleted is now history!");
-                    confirmDialog.showCancelButton(false);
-                    arrayAdapter.notifyDataSetChanged();
-                    confirmDialog.setConfirmButton("Okay", new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            confirmDialog.dismissWithAnimation();
-                        }
-                    });
-                } catch (SnappydbException e) {
-                    e.printStackTrace();
-                }
+        confirmDialog.setConfirmButton("Yes", sweetAlertDialog -> {
+            try {
+                historyDB.del(text);
+                confirmDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                confirmDialog.setTitleText("Deleted!");
+                confirmDialog.setContentText("The history you deleted is now history!");
+                confirmDialog.showCancelButton(false);
+                arrayAdapter.notifyDataSetChanged();
+                confirmDialog.setConfirmButton("Okay", sweetAlertDialog1 -> confirmDialog.dismissWithAnimation());
+            } catch (SnappydbException e) {
+                e.printStackTrace();
             }
         });
-        confirmDialog.setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                confirmDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                confirmDialog.setTitleText("Aborted");
-                confirmDialog.setContentText("Your file is safe from the void that is deletion");
-                confirmDialog.showCancelButton(false);
-                confirmDialog.setConfirmButton("Okay", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        confirmDialog.dismissWithAnimation();
-                    }
-                });
-            }
+        confirmDialog.setCancelButton("No", sweetAlertDialog -> {
+            confirmDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+            confirmDialog.setTitleText("Aborted");
+            confirmDialog.setContentText("Your file is safe from the void that is deletion");
+            confirmDialog.showCancelButton(false);
+            confirmDialog.setConfirmButton("Okay", sweetAlertDialog12 -> confirmDialog.dismissWithAnimation());
         });
         confirmDialog.show();
         return false;
@@ -126,22 +108,16 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final String book = history.get(position).trim();
         final SweetAlertDialog sureDialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
-            sureDialog.setTitleText("Search?")
-                    .setContentText("Do you want to search for this book again?")
-                    .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sureDialog.dismissWithAnimation();
-                        startActivity(new Intent(getApplicationContext(), DownloadActivity.class).putExtra("searchQuery", book).putExtra("searchBy", "book"));
-                    }
+        sureDialog.setTitleText("Search?")
+                .setContentText("Do you want to search for this book again?")
+                .setConfirmButton("Yes", sweetAlertDialog -> {
+                    sureDialog.dismissWithAnimation();
+                    startActivity(new Intent(getApplicationContext(), DownloadActivity.class)
+                            .putExtra("searchQuery", book)
+                            .putExtra("searchBy", "book"));
                 })
-                .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sureDialog.dismissWithAnimation();
-                    }
-                });
-            sureDialog.show();
+                .setCancelButton("No", sweetAlertDialog -> sureDialog.dismissWithAnimation());
+        sureDialog.show();
     }
 
     // options menu
@@ -169,41 +145,25 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     private void deleteAllHistory() {
         final SweetAlertDialog confirmDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
         confirmDialog.setTitleText("Delete All History?");
-        confirmDialog.setConfirmButton("I'm sure", new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                try {
-                    historyDB.destroy();
-                    confirmDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    confirmDialog.setTitleText("Deleted!");
-                    confirmDialog.setContentText("This won't be traced back to you! ;)");
-                    confirmDialog.showCancelButton(false);
-                    arrayAdapter.notifyDataSetChanged();
-                    confirmDialog.setConfirmButton("Take Me Back", new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            confirmDialog.dismissWithAnimation();
-                        }
-                    });
-                } catch (SnappydbException e) {
-                    e.printStackTrace();
-                }
+        confirmDialog.setConfirmButton("I'm sure", sweetAlertDialog -> {
+            try {
+                historyDB.destroy();
+                confirmDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                confirmDialog.setTitleText("Deleted!");
+                confirmDialog.setContentText("This won't be traced back to you! ;)");
+                confirmDialog.showCancelButton(false);
+                arrayAdapter.notifyDataSetChanged();
+                confirmDialog.setConfirmButton("Take Me Back", sweetAlertDialog1 -> confirmDialog.dismissWithAnimation());
+            } catch (SnappydbException e) {
+                e.printStackTrace();
             }
         });
-        confirmDialog.setCancelButton("Nooooo", new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                confirmDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                confirmDialog.setTitleText("Aborted");
-                confirmDialog.setContentText("All hail the saviour of download history!");
-                confirmDialog.showCancelButton(false);
-                confirmDialog.setConfirmButton("Okay", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        confirmDialog.dismissWithAnimation();
-                    }
-                });
-            }
+        confirmDialog.setCancelButton("Nooooo", sweetAlertDialog -> {
+            confirmDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+            confirmDialog.setTitleText("Aborted");
+            confirmDialog.setContentText("All hail the saviour of download history!");
+            confirmDialog.showCancelButton(false);
+            confirmDialog.setConfirmButton("Okay", sweetAlertDialog12 -> confirmDialog.dismissWithAnimation());
         });
         confirmDialog.show();
     }
