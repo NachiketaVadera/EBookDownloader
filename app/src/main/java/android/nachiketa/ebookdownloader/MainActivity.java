@@ -12,14 +12,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.MotionEventCompat;
 
 import com.shashank.sony.fancytoastlib.FancyToast;
 
@@ -90,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void execute(View view) {
         EditText etQuery = findViewById(R.id.etQuery);
+        Log.i(TAG, "execute: Query:\n" + etQuery.getText().toString());
 
         if (!etQuery.getText().toString().equals("")) {
             // String choice;
@@ -98,9 +97,11 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("query", etQuery.getText().toString());
             intent.putExtra("choice", "vk");
             startActivity(intent);
+            Log.i(TAG, "execute: Download Activity Launched");
         } else {
             FancyToast.makeText(this, "Don't shoot blanks!", Toast.LENGTH_LONG, FancyToast.ERROR, false).show();
             etQuery.setFocusable(true);
+            Log.i(TAG, "execute: Empty Query");
         }
     }
 
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add("History");
         menu.add("Recommendations");
         menu.add("Exit");
+        Log.i(TAG, "onCreateOptionsMenu: Executed");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(0);
                 break;
         }
+        Log.i(TAG, "onOptionsItemSelected: Executed");
         return super.onOptionsItemSelected(item);
     }
 }
