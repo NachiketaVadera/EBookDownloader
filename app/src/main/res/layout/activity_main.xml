@@ -1,71 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="4"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background">
 
     <EditText
         android:id="@+id/etQuery"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FDD9E5"
-        android:hint="@string/et_hint_query"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_element"
         android:inputType="text"
-        android:text=""
-        android:textAlignment="center"
-        tools:ignore="Autofill" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FBF7D2"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <RadioButton
-            android:id="@+id/radSrcVK"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="@string/radio_text_vk"
-            android:textSize="20sp" />
-
-        <RadioButton
-            android:id="@+id/radSrcLibgen"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/radio_text_libgen"
-            android:textSize="20sp" />
-
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/btnDownload"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#CAF2E9"
-        android:fontFamily="monospace"
-        android:onClick="execute"
-        android:text="@string/button_text_search"
-        android:textSize="20sp" />
+        android:textColor="@color/black"
+        android:importantForAutofill="no"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/tvDisplay"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#283032"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text=""
         android:textAlignment="center"
-        android:textColor="#FCFFF7"
-        android:textSize="20sp" />
+        android:textSize="25sp" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_button_height"
+        android:layout_alignParentBottom="true"
+        android:text="@string/button_text_search"
+        android:background="@color/blue_btn_bg_color"
+        android:onClick="execute" />
+
+</RelativeLayout>

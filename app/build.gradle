@@ -58,6 +58,9 @@ dependencies {
     //https://mvnrepository.com/artifact/com.github.f0ris.sweetalert/library
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
 
+    //https://material.io
+    implementation 'com.google.android.material:material:1.0.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 }
