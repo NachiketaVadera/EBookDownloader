@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -33,43 +34,39 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private RelativeLayout relativeLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    private Runnable initializerThread = () -> {
         btnSearch = findViewById(R.id.btnSearch);
         relativeLayout = findViewById(R.id.relMain);
-        random = new Random();
-        Log.i(TAG, "onCreate: Executed");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-            Log.i(TAG, "onStart: Requested storage permission");
-        }
-
         textView = findViewById(R.id.tvDisplay);
+        random = new Random();
+        Log.i(TAG, "initializerThread: executed");
+    };
+    private Runnable permissionsAndUISetupThread = () -> {
+        String quote = "";
         try {
-            textView.setText(new Global().getRandomQuote());
-            Log.i(TAG, "onStart: set quote");
+            quote = new Global().getRandomQuote();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "onStart: IO Exception", e);
+        }
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            Log.i(TAG, "permissionsAndUISetupThread: Requested storage permission");
         }
 
-        btnSearch.setBackgroundColor(Color.rgb(random.nextInt(201),
-                random.nextInt(201), random.nextInt(201)));
+        String finalQuote = quote;
+        runOnUiThread(() -> {
+            btnSearch.setBackgroundColor(Color.rgb(random.nextInt(201),
+                    random.nextInt(201), random.nextInt(201)));
 
-        relativeLayout.setBackgroundColor(Color.rgb(random.nextInt(101),
-                random.nextInt(101), random.nextInt(101)));
+            relativeLayout.setBackgroundColor(Color.rgb(random.nextInt(51),
+                    random.nextInt(51), random.nextInt(51)));
 
-        Log.i(TAG, "onStart: Executed");
-    }
+            textView.setText(finalQuote);
+
+            Log.i(TAG, "permissionsAndUISetupThread: executed");
+        });
+    };
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -115,6 +112,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        initializerThread.run();
+        Log.i(TAG, "onCreate: Executed");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        permissionsAndUISetupThread.run();
+        Log.i(TAG, "onStart: Executed");
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getTitle().toString()) {
             case "History":
@@ -127,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(0);
                 break;
         }
-        Log.i(TAG, "onOptionsItemSelected: Executed");
+        Log.i(TAG, "onOptionsItemSelected: Executed with " + item.getTitle().toString());
         return super.onOptionsItemSelected(item);
     }
 }

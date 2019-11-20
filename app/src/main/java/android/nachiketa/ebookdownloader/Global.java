@@ -18,6 +18,6 @@ class Global {
             builder.append(line);
         }
         String[] temp = builder.toString().split("~");
-        return temp[new Random().nextInt(37)];
+        return temp[new Random().nextInt(50)];
     }
 }

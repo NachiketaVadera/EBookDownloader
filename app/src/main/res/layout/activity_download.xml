@@ -8,6 +8,7 @@
     <ListView
         android:id="@+id/expanded_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/background" />
 
 </RelativeLayout>

@@ -10,4 +10,5 @@
     <string name="radio_text_author">Search by author</string>
     <string name="radio_text_vk">VK</string>
     <string name="radio_text_libgen">Libgen</string>
+    <string name="et_hint_search">Search for an eBook!</string>
 </resources>

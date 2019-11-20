@@ -3,7 +3,7 @@
     android:shape="rectangle"
     android:padding="10dp">
 
-    <solid android:color="#FFFFFF" />
+    <solid android:color="#FFFFFFFF" />
 
     <size android:height="@dimen/edit_text_height" />
 

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.shashank.sony.fancytoastlib.FancyToast;
 import com.snappydb.DB;
@@ -34,7 +35,7 @@ import java.util.Random;
 public class DownloadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String NOT_FOUND_MESSAGE = "Sorry! We were unable to find the book";
-    private static final String TAG = "ebkdldr";
+    private static final String TAG = "__envy__";
     private List<String> linkText = null;
     private List<String> links = null;
     private ArrayAdapter<String> arrayAdapter;
@@ -42,6 +43,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_download);
 
         String quote = null;
@@ -55,8 +57,8 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         links = new ArrayList<>();
         linkText = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, linkText);
 
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.listview_list_item, linkText);
         linkText.add("Searching... Read this amazing quote:\n\n\n" + quote);
 
         listView.setAdapter(arrayAdapter);

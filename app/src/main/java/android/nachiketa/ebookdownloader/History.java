@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
@@ -30,6 +32,7 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_history);
 
         try {
@@ -60,7 +63,11 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
         } catch (SnappydbException e) {
             e.printStackTrace();
         }
-        history.addAll(Arrays.asList(values));
+        if (values != null) {
+            history.addAll(Arrays.asList(values));
+        } else {
+            Toast.makeText(this, "Values is NULL", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showNoHistory() {

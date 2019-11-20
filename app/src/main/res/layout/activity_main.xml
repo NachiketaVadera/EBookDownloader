@@ -15,7 +15,8 @@
         android:layout_margin="10dp"
         android:background="@drawable/rounded_element"
         android:inputType="text"
-        android:textColor="@color/black"
+        android:hint="@string/et_hint_search"
+        android:textAlignment="center"
         android:importantForAutofill="no"
         tools:ignore="LabelFor" />
 
@@ -26,6 +27,7 @@
         android:layout_centerInParent="true"
         android:text=""
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="25sp" />
 
     <Button
@@ -34,6 +36,7 @@
         android:layout_height="@dimen/search_button_height"
         android:layout_alignParentBottom="true"
         android:text="@string/button_text_search"
+        android:textColor="@color/white"
         android:background="@color/blue_btn_bg_color"
         android:onClick="execute" />
 
