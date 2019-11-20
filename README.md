@@ -58,6 +58,7 @@ Source Code (tar.gz):
 ## Contributers
 
 [IzzySoft](https://github.com/IzzySoft)
+[TacoTheDank](https://github.com/TacoTheDank)
 
 ## Contributing
 
