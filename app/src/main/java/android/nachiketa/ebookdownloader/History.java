@@ -23,11 +23,12 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class History extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
+public class History extends AppCompatActivity implements AdapterView.OnItemLongClickListener,
+        AdapterView.OnItemClickListener {
 
-    List<String> history = null;
-    DB historyDB = null;
-    ArrayAdapter<String> arrayAdapter;
+    private List<String> history = null;
+    private DB historyDB = null;
+    private ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,8 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
 
         fillHistoryList();
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, history);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.listview_list_item,
+                history);
         listHistory.setAdapter(arrayAdapter);
         listHistory.setOnItemLongClickListener(this);
         listHistory.setOnItemClickListener(this);
@@ -71,11 +73,13 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     }
 
     private void showNoHistory() {
-        SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        SweetAlertDialog dialog = new SweetAlertDialog(this,
+                SweetAlertDialog.WARNING_TYPE);
         dialog.setTitleText("You have no history,\nJon Snow!");
         dialog.setConfirmText("Go Back");
         dialog.setConfirmClickListener(sweetAlertDialog -> {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(),
+                    MainActivity.class));
             finish();
         });
         dialog.show();
@@ -85,7 +89,8 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         final String text = history.get(position);
 
-        final SweetAlertDialog confirmDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        final SweetAlertDialog confirmDialog = new SweetAlertDialog(this,
+                SweetAlertDialog.WARNING_TYPE);
         confirmDialog.setTitleText("Are you sure you want to delete?");
         confirmDialog.setConfirmButton("Yes", sweetAlertDialog -> {
             try {
@@ -95,7 +100,8 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
                 confirmDialog.setContentText("The history you deleted is now history!");
                 confirmDialog.showCancelButton(false);
                 arrayAdapter.notifyDataSetChanged();
-                confirmDialog.setConfirmButton("Okay", sweetAlertDialog1 -> confirmDialog.dismissWithAnimation());
+                confirmDialog.setConfirmButton("Okay", sweetAlertDialog1 ->
+                        confirmDialog.dismissWithAnimation());
             } catch (SnappydbException e) {
                 e.printStackTrace();
             }
@@ -105,7 +111,8 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
             confirmDialog.setTitleText("Aborted");
             confirmDialog.setContentText("Your file is safe from the void that is deletion");
             confirmDialog.showCancelButton(false);
-            confirmDialog.setConfirmButton("Okay", sweetAlertDialog12 -> confirmDialog.dismissWithAnimation());
+            confirmDialog.setConfirmButton("Okay", sweetAlertDialog12 ->
+                    confirmDialog.dismissWithAnimation());
         });
         confirmDialog.show();
         return false;
@@ -114,16 +121,19 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final String book = history.get(position).trim();
-        final SweetAlertDialog sureDialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
+        final SweetAlertDialog sureDialog = new SweetAlertDialog(this,
+                SweetAlertDialog.NORMAL_TYPE);
         sureDialog.setTitleText("Search?")
                 .setContentText("Do you want to search for this book again?")
                 .setConfirmButton("Yes", sweetAlertDialog -> {
                     sureDialog.dismissWithAnimation();
-                    startActivity(new Intent(getApplicationContext(), DownloadActivity.class)
-                            .putExtra("searchQuery", book)
-                            .putExtra("searchBy", "book"));
+                    startActivity(new Intent(getApplicationContext(),
+                            DownloadActivity.class)
+                            .putExtra("query", book)
+                            .putExtra("choice", "vk"));
                 })
-                .setCancelButton("No", sweetAlertDialog -> sureDialog.dismissWithAnimation());
+                .setCancelButton("No", sweetAlertDialog ->
+                        sureDialog.dismissWithAnimation());
         sureDialog.show();
     }
 
@@ -150,7 +160,8 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
     }
 
     private void deleteAllHistory() {
-        final SweetAlertDialog confirmDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        final SweetAlertDialog confirmDialog = new SweetAlertDialog(this,
+                SweetAlertDialog.WARNING_TYPE);
         confirmDialog.setTitleText("Delete All History?");
         confirmDialog.setConfirmButton("I'm sure", sweetAlertDialog -> {
             try {
@@ -160,7 +171,8 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
                 confirmDialog.setContentText("This won't be traced back to you! ;)");
                 confirmDialog.showCancelButton(false);
                 arrayAdapter.notifyDataSetChanged();
-                confirmDialog.setConfirmButton("Take Me Back", sweetAlertDialog1 -> confirmDialog.dismissWithAnimation());
+                confirmDialog.setConfirmButton("Take Me Back",
+                        sweetAlertDialog1 -> confirmDialog.dismissWithAnimation());
             } catch (SnappydbException e) {
                 e.printStackTrace();
             }
@@ -170,7 +182,8 @@ public class History extends AppCompatActivity implements AdapterView.OnItemLong
             confirmDialog.setTitleText("Aborted");
             confirmDialog.setContentText("All hail the saviour of download history!");
             confirmDialog.showCancelButton(false);
-            confirmDialog.setConfirmButton("Okay", sweetAlertDialog12 -> confirmDialog.dismissWithAnimation());
+            confirmDialog.setConfirmButton("Okay", sweetAlertDialog12 ->
+                    confirmDialog.dismissWithAnimation());
         });
         confirmDialog.show();
     }

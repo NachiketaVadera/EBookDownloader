@@ -64,13 +64,14 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(this);
 
-        performSearch(getIntent().getStringExtra("query"), Objects.requireNonNull(getIntent().getStringExtra("choice")));
+        performSearch(getIntent().getStringExtra("query"),
+                Objects.requireNonNull(getIntent().getStringExtra("choice")));
     }
 
     private void performSearch(final String query, final String mode) {
         final String searchQuery;
         if (mode.equals("vk")) {
-            searchQuery = "https://www.google.com/search?q=" + query + "epub+vk";
+            searchQuery = "https://duckduckgo.com/html/?q=" + query + "epub+vk";
             Thread sourceVK = new Thread(new Runnable() {
 
                 StringBuilder linkBuilder = new StringBuilder();
