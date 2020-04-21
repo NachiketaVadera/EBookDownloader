@@ -10,15 +10,9 @@ eBooks is an app that searches the interent for the book you request and gives y
 
 <a href="https://f-droid.org/packages/android.nachiketa.ebookdownloader/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75"></a>
 
-## Details
+## Downloads
 
-eBooks dose not search books from a formal database. Instead, your queries are fired through Google and the results are parsed for links to trusted sources that can provide download links. Currently, the only source in use is vk.com with more to follow. From the search results page, the app selects a page that has mentioned your query on the pages text. The selected page is parsed again and all the file download links are collected and sent back for you to see and download. 
-
-Another feature that the app provides is ‘Search by Author’ which parses a card view google search page with books by all the authors. While easy, this method is quite inefficient and will be replaced down the line with JSON parsing of Google Books API.
-
-Libraries used: 
-* [Jsoup](https://jsoup.org/)
-* [PenAndPaper](https://github.com/NachiketaVadera/PenAndPaper) {My own under development library)
+[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.5/eBooks-v0.5.apk)
 
 ## How to Use
 
@@ -32,6 +26,19 @@ Libraries used:
 * Make sure you have appropriate application to read the file you just downloaded.
 * Have fun reading!
 
+## Details
+
+eBooks dose not search books from a formal database. Instead, your queries are fired through Google and the results are parsed for links to trusted sources that can provide download links. Currently, the only source in use is vk.com with more to follow. From the search results page, the app selects a page that has mentioned your query on the pages text. The selected page is parsed again and all the file download links are collected and sent back for you to see and download. 
+
+Another feature that the app provides is ‘Search by Author’ which parses a card view google search page with books by all the authors. While easy, this method is quite inefficient and will be replaced down the line with JSON parsing of Google Books API.
+
+Libraries used: 
+* [Jsoup](https://jsoup.org/)
+* [PenAndPaper](https://github.com/NachiketaVadera/PenAndPaper) {My own under development library)
+* [FancyToast](https://github.com/Shashank02051997/FancyToast-Android/)
+* [SnappyDB](https://github.com/nhachicha/SnappyDB/)
+* [SweetAlertDialog](https://mvnrepository.com/artifact/com.github.f0ris.sweetalert/library)
+
 ## Next Step
 
 Once started, an app can never be completely finished. 
@@ -39,21 +46,6 @@ Once started, an app can never be completely finished.
 1. Add new sources.
 2. Optimize code.
 3. Improve user experience.
-
-## Downloads
-
-### For Users
-
-Latest apk:
-[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.4/eBooks_v0.4_app-release.apk)
-
-### For Fellow Programmers
-
-Source Code (zip):
-[eBooks.zip](https://github.com/NachiketaVadera/EBookDownloader/archive/v0.4.zip)
-
-Source Code (tar.gz):
-[eBooks.tar.gz](https://github.com/NachiketaVadera/EBookDownloader/archive/v0.4.tar.gz)
 
 ## Contributers
 
