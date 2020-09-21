@@ -122,7 +122,7 @@ public class DownloadActivity extends AppCompatActivity implements AdapterView.O
                         String[] displayTexts = temp.split("\n");
                         linkText.addAll(Arrays.asList(displayTexts));
 
-                        Log.i(TAG, "calling setUI() from libgen");
+                        Log.i(TAG, "calling setUI() from vk");
                         setUI();
                     });
                 }
