@@ -12,7 +12,7 @@ eBooks is an app that searches the interent for the book you request and gives y
 
 ## Downloads
 
-[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.5/eBooks-v0.5.apk)
+[eBooks.apk](https://github.com/NachiketaVadera/EBookDownloader/releases/download/v0.5a/ebooks-0.5.1.apk)
 
 ## How to Use
 
