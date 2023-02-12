@@ -1,3 +1,9 @@
+# Important Note
+So, after a long time, I've finally come around to making this app a lot better. I've decided to change the 
+scope of the app a bit and hence, introducting [athena](https://github.com/NachiketaVadera/athena). 
+
+I'll soon archive this repository.
+
 # eBooks
 
 [![GitHub license](https://img.shields.io/github/license/NachiketaVadera/EBookDownloader.svg?style=for-the-badge)](https://github.com/NachiketaVadera/EBookDownloader/blob/master/LICENSE) 
